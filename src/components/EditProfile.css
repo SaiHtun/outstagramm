@@ -1,0 +1,75 @@
+input[type="file"] {
+  display: none;
+}
+.editProfile {
+  position: absolute;
+  width: 80vw;
+  background-color: white;
+  transform: translateY(-500px);
+  /* opacity: 0; */
+  transition: all 0.5s ease-in-out;
+}
+
+.showEditProfile {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.profile__header {
+  height: 30vh;
+  justify-content: space-evenly;
+}
+
+.profileLabel {
+  color:white;
+  display: inline-block;
+  background-color:rgba(0,0,0,0.4);
+  width: 100%;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.loadedProfileImage {
+  /* border: 3px solid skyblue; */
+}
+
+.profile__info {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+ 
+}
+
+.profile__info input {
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  padding: 10px 15px;
+  border: none;
+  border-bottom: 1px solid rgb(201, 201, 201);
+}
+
+.editProfile__btn {
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid rgb(189, 188, 188);
+  background-color: white;
+  width: 70%;
+  padding: 8px 15px;
+  font-weight: bold;
+}
+
+/* media query */
+@media only screen and (max-width: 700px) {
+  .profile__header {
+    height: 50vh;
+  }
+}
+
+.cancel {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+  cursor: pointer;
+}

@@ -1,0 +1,31 @@
+.postsPanel {
+  /* margin-top: 20px; */
+  width: 80%;
+  margin-left: auto;
+  /* margin-right: auto; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.noPost {
+  width: 100vw;
+  height: 100vh;
+  background-color: #fafafa;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+}
+
+.giphy-embed {
+  background-color: #fafafa;
+}
+
+@media only screen and (max-width: 1000px) {
+ .postsPanel {
+   width: 90%;
+   padding: 0px;
+   margin-top: 0px;
+ }
+}

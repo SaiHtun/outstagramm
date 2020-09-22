@@ -1,0 +1,75 @@
+.comment {
+  padding: 5px 10px;
+  display: flex;
+}
+.pointer {
+  cursor: pointer;
+}
+
+.comment .commentInfo {
+  flex: 11;
+}
+.comment .commentDots {
+  flex: 1;
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+  display: flex;
+}
+
+.comment__dots {
+  /* pointer-events: none; */
+  display: none;
+}
+
+.comment:hover .comment__dots {
+  display: inline-block;
+}
+
+.comment__dropPanel {
+  z-index: 1;
+  width: 120px;
+  background-color: #fff;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+  text-align: center;
+  border-radius: 10px;
+  pointer-events: none;
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.2s ease-in-out;
+}
+
+.comment__dropPanel li {
+  padding: 2px;
+  margin-bottom: 5px;
+}
+
+.showCommentPanel {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: visible;
+}
+
+.commentInput {
+  width: 80%;
+  margin-left: 10px;
+  border: none;
+  z-index: 10;
+  flex: 8;
+}
+
+.commentForm {
+  display: flex;
+  width: 100%;
+}
+
+.commentForm .btn {
+  width: 150px;
+  text-align: center;
+}

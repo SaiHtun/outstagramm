@@ -1,0 +1,142 @@
+.edit {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 10;
+}
+
+.edit__panel {
+  width: 400px;
+  max-height: 500px;
+  background-color: white;
+}
+
+.edit__nav {
+  padding: 10px 30px;
+  width: 100%;
+  background-color: #EFEFEF;
+}
+
+.edit__info {
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.edit__avater {
+  flex: 1;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background-color: salmon;
+  border-radius: 50%;
+}
+
+.edit__info input[type="text"] {
+  flex: 7;
+  margin-left: 10px;
+  padding: 10px;
+  border: none;
+}
+
+.edit__image {
+  width: 100%;
+  height: 200px;
+  padding: 10px 30px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  position: relative;
+}
+.edit__image input[type="file"] {
+  display: none;
+}
+
+.edit__image img {
+  width: 160px;
+  object-fit: contain;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+
+.edit__image__label {
+  width: 180px;
+  height: 180px;
+  border: 1px dashed rgb(208, 208, 208);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
+
+.edit__image label {
+  cursor: pointer;
+  color: grey;
+}
+
+
+
+.edit__footer {
+  width: 100%;
+  padding: 10px 25px;
+}
+
+.edit__footer button {
+  margin: 10px 0px;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: white;
+  font-weight: bold;
+  border: 1px solid rgb(211, 211, 211);
+  cursor: pointer;
+}
+
+/* background image */
+
+.bgImage, .bgNewImage {
+  width: 150px;
+  height: 150px;
+  z-index: 1;
+}
+
+.bgImageOverlay {
+  pointer-events: none;
+  width: 180px;
+  height: 180px;
+  opacity: 0;
+  background-color: rgba(0,0,0,0.6);
+  transform: translateY(50px);
+  transition: all 0.3s ease-in-out;
+  position: absolute;
+  z-index: 1;
+}
+
+.showBgImageOverlay {
+  pointer-events: visible;
+  opacity: 1;
+  transform: translateY(0px);
+}
+/* delete btn */
+.edit__delete_btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  .edit__panel {
+    width: 300px;
+    height: 400px;
+  }
+}

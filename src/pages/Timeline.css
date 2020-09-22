@@ -1,0 +1,44 @@
+.hero {
+  display: flex;
+}
+
+.showcase {
+  flex: 8;
+  margin-top: 8px;
+  padding: 20px;
+}
+
+.users {
+  flex: 3;
+  margin-top: 40px;
+  position: relative;
+  /* background-color: grey; */
+}
+
+.friends {
+  margin-top: 20px;
+  width: 100%;
+  position: fixed;
+}
+
+@media only screen and (max-width: 1000px) {
+  .users {
+    display: none;
+  }
+  .postsPanel, .form {
+    margin-right: auto;
+  }
+  .showcase {
+    padding: 0px;
+    padding-top: 10px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .timeline {
+    font-size: 14px;
+  }
+  .post__header {
+    height: 45px;
+  }
+}

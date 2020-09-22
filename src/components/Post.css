@@ -1,0 +1,150 @@
+.post {
+  width: 100%;
+  /* overflow: auto; */
+  margin: 20px;
+  border: 1px solid #DBDBDB;
+  position: relative;
+}
+
+.post__header {
+  background-color: #ffff;
+  width: 100%;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-height: 60px;
+}
+
+.post__avater {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: salmon;
+  margin-right: 10px;
+  line-height: 40px;
+  text-align: center;
+}
+
+.post__image {
+  width: 100%;
+}
+
+.post__image img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.post__caption, .comment {
+  width: 100%;
+  padding: 10px;
+  background-color: #ffff;
+  /* overflow: auto; */
+}
+
+
+.commentForm {
+  display: flex;
+  align-items: center;
+}
+
+.commentForm input {
+  flex: 4;
+  padding: 8px 10px;
+  border: none;
+}
+.commentForm button {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.avater__name {
+  display: flex;
+  align-items: center;
+}
+
+/* Post drop panel */
+
+.post__dropPanel{
+  z-index: 1;
+  width: 150px;
+  background-color: #fff;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+  0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+  0 12.5px 10px rgba(0, 0, 0, 0.06),
+  0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+  0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+  0 100px 80px rgba(0, 0, 0, 0.12);
+  text-align: center;
+  border-radius: 10px;
+  pointer-events: none;
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.2s ease-in-out;
+}
+
+.post__dropPanel ul li {
+  width: 100%;
+  display: inline-block;
+  cursor: pointer;
+} 
+
+.post__dropPanel ul li:first-child{
+  border-bottom: 1px solid #DBDBDB;
+}
+
+.ggPanel {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: visible;
+}
+
+.pPanel {
+  display: flex;
+  justify-content: flex-end;
+} 
+
+.dots {
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+}
+
+.dot {
+  pointer-events: none;
+}
+
+a {
+  display: inline-block;
+  width: 100%;
+}
+
+/* likes heart */
+.post__menu__bar {
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+
+.outlineHeart {
+  font-size: 1.5em;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.fullHeart {
+  font-size: 1.5em;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  color: red;
+  cursor: pointer;
+}

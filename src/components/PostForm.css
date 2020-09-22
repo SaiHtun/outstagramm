@@ -1,0 +1,61 @@
+.form {
+  width: 80%;
+  margin-left: auto;
+  /* margin-right: auto; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.form input {
+  margin-bottom: 10px;
+}
+
+.form input[type="text"] {
+  border: none;
+  border-bottom: 1px solid grey;
+  padding: 10px;
+}
+
+.form input[type="file"] {
+  display: none;
+}
+
+.faImages {
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.postBtn {
+  padding: 5px 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.image_btn {
+  border: 1px solid rgb(215, 215, 215);
+  padding: 5px 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.progress {
+  width: 100%;
+}
+
+@media only screen and (max-width: 1000px) {
+  .form {
+    width: 90%;
+    padding: 0px;
+  }
+ }
+@media only screen and (min-width: 890px) {
+  .form {
+    padding: 0px;
+  }
+ }
