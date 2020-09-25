@@ -38,7 +38,7 @@ function Profile() {
           }
         }))
       })    
-  }, [])
+  }, [authUser.uid])
 
   useEffect(() => {
     let gg = db.collection("posts").where("userId", "==", authUser.uid)

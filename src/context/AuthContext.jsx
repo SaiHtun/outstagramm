@@ -8,7 +8,8 @@ export const AuthContext = createContext();
 function AuthContextProvider(props) {
   const localStorageAuth = localStorage.getItem('auth');
   const [ authUser, setAuthUser ] = useState(JSON.parse(localStorageAuth) || null); 
-  const [ error, setError ] = useState(null);
+  const [ signUpError, setSignUpError ] = useState(null);
+  const [ signInError, setSignInError] = useState(null);
   const [ closePanel, setClosePanel ] = useState(false);
   const [ dropProfilePanel, setDropProfilePanel ] = useState(false);
   const [ users, setUsers ] = useState([]);
@@ -85,12 +86,16 @@ function AuthContextProvider(props) {
         authUser.user.updateProfile({ displayName: username })
       }
     })
-    .catch((err) => alert(err.message));
+    .catch((err) => {
+      setSignUpError(err.message)
+    });
   }
 
   const SignIn = (email, password) => {
     auth.signInWithEmailAndPassword(email, password)
-      .catch((err) => setError(err));
+      .catch((err) => {
+        setSignInError(err.message)
+      });
   }
 
   const SignOut = () => {
@@ -98,9 +103,14 @@ function AuthContextProvider(props) {
     localStorage.removeItem("auth");
   }
 
+  const clearError = () => {
+    setSignInError(null);
+    setSignUpError(null);
+  }
+
   return (
     <AuthContext.Provider value={{SignUp, closeProfile, SignIn, SignOut, 
-    authUser, error, closePanel, togglePostPanel, dropProfilePanel, toggleDropProfilePanel, users, user}}>
+    authUser, signInError, signUpError, closePanel, togglePostPanel, dropProfilePanel, toggleDropProfilePanel, users, user, clearError}}>
       { props.children }
     </AuthContext.Provider>
   )

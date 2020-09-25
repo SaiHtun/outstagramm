@@ -19,7 +19,7 @@ function Navbar() {
     <header className="main-header">
       <nav className="navbar">
         <div className="navbar__brand">
-          <img  src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="instagram"/>
+         <h1 className="logo">Outstagramm</h1>
         </div>
         <div className="navbar__btns">
           <h3 className="navbar__name" style={{color: "skyblue"}}>{ name }</h3>

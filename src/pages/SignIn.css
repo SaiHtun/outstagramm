@@ -4,6 +4,7 @@
   height: 500px;
   text-align: center;
   border: 1px solid grey;
+  position: absolute;
 }
 
 .signin form {

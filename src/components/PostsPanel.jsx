@@ -12,7 +12,7 @@ function PostsPanel() {
           return (
             <Post post={post} key={post.id}/>
           )
-        }) : <div className="noPost"><iframe title="loading" src="https://giphy.com/embed/KG4PMQ0jyimywxNt8i" width="100px" height="100px" style={{ position:"absolute"}}frameBorder="0" className="giphy-embed" allowFullScreen></iframe></div>
+        }) : null
       }
     </div>
   )

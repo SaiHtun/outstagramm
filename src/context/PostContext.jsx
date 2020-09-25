@@ -1,12 +1,15 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState, useContext } from 'react';
 import { db } from '../firebase';
+import { AuthContext } from '../context/AuthContext';
 
 export const PostContext = createContext();
 
 function PostContextProvider(props) {
   const [ posts, setPosts ] = useState([]);
+  const { authUser } = useContext(AuthContext)
 
   useEffect(() => {
+    if(!authUser) return;
     let unsubscribed = db.collection('posts').orderBy("timestamp", "desc").onSnapshot((snapshot) => {
       setPosts(snapshot.docs.map((item) => {
         return {
@@ -18,7 +21,7 @@ function PostContextProvider(props) {
     return () => {
       unsubscribed()
     }
-  }, [])
+  }, [authUser])
 
   return (
     <PostContext.Provider value={{posts}}>

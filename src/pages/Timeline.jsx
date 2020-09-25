@@ -7,9 +7,11 @@ import PostForm from '../components/PostForm';
 import { Route } from 'react-router-dom';
 import EditPost from '../components/EditPost';
 import "./Timeline.css";
+import { PostContext } from '../context/PostContext';
 
 function Timeline( ) {
   const { authUser, closeProfile, users } = useContext(AuthContext);
+  const { posts } = useContext(PostContext);
   // fetch users collections
   
 
@@ -34,16 +36,22 @@ function Timeline( ) {
       <Route path="/timeline/posts/:id" component={EditPost} />
       <Navbar />
       <div className="hero container">
-        <div className="showcase">
-          <PostForm />
-          <PostsPanel />
-        </div>
-        <div className="users">
-          <h3 style={{position: "fixed"}}>Suggested friends</h3>
-          <div className="friends">
-              {usersList}
-          </div>
-        </div>
+        { posts.length && users? (
+          <>
+            <div className="showcase">
+              <PostForm />
+              <PostsPanel />
+            </div>
+            <div className="users">
+              <h3 style={{position: "fixed"}}>Suggested friends</h3>
+              <div className="friends">
+                  {usersList}
+              </div>
+            </div>
+          </>
+        ): (
+          <div className="noPost"><iframe title="loading" src="https://giphy.com/embed/KG4PMQ0jyimywxNt8i" width="100px" height="100px" style={{ position:"absolute"}}frameBorder="0" className="giphy-embed" allowFullScreen></iframe></div>
+        )}
       </div>
     </section>
   )

@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+.logo {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.3em;
+}
+
 .main-header {
   background-color: red;
   margin-bottom: 60px;

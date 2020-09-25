@@ -8,23 +8,43 @@ function SignUp() {
   const [ username, setUsername ] = useState("");
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
-  const { SignUp, authUser } = useContext(AuthContext);
+  const { SignUp, authUser, signUpError, clearError } = useContext(AuthContext);
+  
 
   if(authUser) return <Redirect to="/timeline"/>
 
   const handleSignUp = (e) => {
     e.preventDefault();
+    // error handling
     SignUp(email, password, username);
   }
+
 
   return (
     <section className="login">
       <div className="signup">
         <form onSubmit={handleSignUp}>
-          <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="instagram"/>
-          <input type="text" id="email" placeholder="Username" value={username} onChange={(e) => { setUsername(e.target.value) }}/>
-          <input type="text" id="email" placeholder="Email" value={email} onChange={(e) => { setEmail(e.target.value) }}/>
-          <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => { setPassword(e.target.value) }}/>
+        {signUpError? (
+          <span className="errorMsg">{signUpError}</span>
+        ) : (
+          null
+        )}
+          <h1 className="login__logo">Outstagramm</h1>
+          <input type="text" id="username" placeholder="Username" value={username} 
+          onChange={(e) => { 
+            clearError();
+            setUsername(e.target.value);
+          }} autoComplete="true"/>
+          <input type="text" id="email" placeholder="Email" value={email} 
+          onChange={(e) => { 
+            clearError();
+            setEmail(e.target.value) 
+          }} autoComplete="true"/>
+          <input type="password" id="password" placeholder="Password" value={password} 
+          onChange={(e) => { 
+            clearError();
+            setPassword(e.target.value) 
+          }} autoComplete="true"/>
           <button type="submit">Sign Up</button>
           <span>Already have an account? <Link to="/signin">Sign In</Link> </span>
         </form>

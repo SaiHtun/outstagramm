@@ -9,7 +9,7 @@ function PostForm() {
   const [ caption, setCaption ] = useState("");
   const [ image, setImage ] =useState(null);
   const [ progress, setProgress ] = useState(null);
-  const { authUser } = useContext(AuthContext);
+  const { authUser, user } = useContext(AuthContext);
 
   const handleImage =(e) => {
     if(e.target.files[0]) {
@@ -39,7 +39,7 @@ function PostForm() {
             caption,
             imageURL: url,
             imageName: image.name,
-            username: authUser.displayName,
+            username: user.user.username,
             userId: authUser.uid
           });
           setProgress(null);
