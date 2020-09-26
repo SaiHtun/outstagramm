@@ -12,14 +12,22 @@ import { PostContext } from '../context/PostContext';
 function Timeline( ) {
   const { authUser, closeProfile, users } = useContext(AuthContext);
   const { posts } = useContext(PostContext);
-  // fetch users collections
-  
 
   const usersList = users.length? (
     users.map((user, index) => {
+      const bgImg = {
+        backgroundImage: `url(${user.imageURL})`,
+        backgroundPosition: 'center',
+        backgroundSize: "cover",
+        width: "40px",
+        height: "40px",
+        objectFit: "contains"
+      }
       return (
           <div key={index} className="avater__name" style={{margin: "10px 0px"}}> 
-            <div className="post__avater">{ user.username[0].toUpperCase()}</div>
+            <div className="post__avater" style={user.imageURL? bgImg: null}>
+              { user.imageURL? null:user.username[0].toUpperCase()}
+            </div>
             <p key={index}>{ user.username }</p>
           </div>
       )

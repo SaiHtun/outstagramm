@@ -66,7 +66,7 @@ function AuthContextProvider(props) {
       };
     })
     
-  }, [authUser])
+  }, [])
 
 
   const SignUp = (email, password, username) => {

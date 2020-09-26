@@ -8,6 +8,7 @@
 
 .photo img {
   width: 100%;
+  align-self: center;
 }
 
 .photo__overlay {

@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import './Navbar.css';
-import { FaUserCircle } from 'react-icons/fa';
 import { AuthContext } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import DropProfilePanel from './DropProfilePanel';
@@ -8,13 +7,29 @@ import "./DropProfilePanel.css";
 
 
 function Navbar() {
- const { authUser, SignOut, toggleDropProfilePanel, user  } = useContext(AuthContext);
+ const { SignOut, toggleDropProfilePanel, user  } = useContext(AuthContext);
+ 
  const handleSignOut = () => {
   SignOut();
  }
 
+  const bgImg = {
+    backgroundImage: `url(${user.user?.imageURL})`,
+    backgroundPosition: 'center',
+    backgroundSize: "cover",
+    width: "40px",
+    height: "40px",
+    objectFit: "contains"
+  }
 
- const name = user.user? user.user.username: authUser.displayName;
+  const defaultBg = {
+    width: "40px",
+    height: "40px",
+    backgroundColor: "salmon",
+    borderRadius: "50%",
+  }
+
+ const name = user.user? user.user.username: null;
   return (
     <header className="main-header">
       <nav className="navbar">
@@ -24,8 +39,8 @@ function Navbar() {
         <div className="navbar__btns">
           <h3 className="navbar__name" style={{color: "skyblue"}}>{ name }</h3>
           <div className="profileAndPanel">
-            <div className="userCircle" onClick={toggleDropProfilePanel}>
-              < FaUserCircle className="profileIcon"/>
+            <div className="userCircle" style={user.user?.imageURL? bgImg: defaultBg} onClick={toggleDropProfilePanel}>
+            {user.user?.imageURL? null: <span style={{ lineHeight: "40px"}}>{ name? name[0].toUpperCase(): null }</span>}
             </div>
             <DropProfilePanel>
               <ul>

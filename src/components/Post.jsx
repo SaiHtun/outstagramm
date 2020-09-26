@@ -17,6 +17,7 @@ function Post( { post } ) {
   const [ dropPanel, setDropPanel ] = useState(false);
   const [ liked, setLiked ] = useState(false);
   const [ likesCount, setLikesCount ] = useState(0);
+  const [ avater, setAvater ] = useState("");
 
   useEffect(() => {
     let unsubscribed = db.collection("posts").doc(post.id).collection("comments").orderBy("timestamp").onSnapshot((snapshot) => {
@@ -30,7 +31,7 @@ function Post( { post } ) {
     return () => {
       unsubscribed()
     }
-  }, [post])
+  }, [post.id])
   // close/up panel listener
   useEffect(() => {
     if(closePanel) {
@@ -47,8 +48,18 @@ function Post( { post } ) {
         let liked = likes.docs.find((like) => like.data().userId === authUser.uid);
         if(liked) setLiked(true);
       })
+
    
   }, [liked, post.id, authUser])
+
+  //  get avater
+  useEffect(() => {
+   db.collection('users').where("id", "==", post.post.userId).get().then((user) => setAvater(user.docs[0].data()))
+
+   return () => {
+     setAvater(null);
+   }
+  }, [post])
 
   // name
   const name = user.user? user.user.username: authUser.displayName;
@@ -157,12 +168,23 @@ function Post( { post } ) {
     <div></div>
   );
 
+
+  let img = {
+    backgroundImage: `url(${avater?.imageURL})`,
+    backgroundPosition: 'center',
+    backgroundSize: "cover",
+    width: "40px",
+    height: "40px",
+    objectFit: "contains"
+  }
+  
+
   return (
     <>
       <div className="post">
         <div className="post__header">
           <div className="avater__name">
-            <div className="post__avater">{ post.post.username[0].toUpperCase()}</div>
+            <div className="post__avater" style={avater? img: null}>{ avater?.imageURL? null:post.post.username[0].toUpperCase()}</div>
             <p className="displayName">{ post.post.username } </p>
           </div>
           <div className="dots">

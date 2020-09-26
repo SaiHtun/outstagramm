@@ -27,7 +27,7 @@ function EditProfile(props) {
     setTimeout(() => {
       setDelay(true)
     }, 100)
-  }, [user])
+  }, [user.profile])
 
   const img = {
     backgroundImage: `url(${
@@ -120,6 +120,19 @@ function EditProfile(props) {
           }
         })
       })
+    } else if (username && profileImg){
+      console.log(profileImg.name)
+      await storage
+        .ref(`images/${authUser.uid}/profile`)
+        .child(profileImg.name)
+        .put(profileImg)
+      let url = await storage
+        .ref(`images/${authUser.uid}/profile`)
+        .child(profileImg.name)
+        .getDownloadURL()
+      await db.collection('users').doc(user.id).update({
+        imageURL: url,
+      })
     } else if (bio) {
       await db.collection('users').doc(user.id).update({
         bio,
@@ -154,18 +167,6 @@ function EditProfile(props) {
               .update({ username: username })
           }
         })
-      })
-    } else if (profileImg) {
-      await storage
-        .ref(`images/${authUser.uid}/profile`)
-        .child(profileImg.name)
-        .put(profileImg)
-      let url = await storage
-        .ref(`images/${authUser.uid}/profile`)
-        .child(profileImg.name)
-        .getDownloadURL()
-      await db.collection('users').doc(user.id).update({
-        imageURL: url,
       })
     }
     setUsername('')

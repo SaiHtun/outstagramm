@@ -29,7 +29,7 @@ function Profile() {
   }
 
   useEffect(() => {
-    db.collection("users").where("id", "==", authUser.uid)
+    let unsubscribed = db.collection("users").where("id", "==", authUser.uid)
       .onSnapshot((snapshot) => {
         setUser(snapshot.docs.map((user) => {
           return {
@@ -37,11 +37,15 @@ function Profile() {
             profile: user.data()
           }
         }))
-      })    
+      })  
+      
+    return () => {
+      unsubscribed()
+    }
   }, [authUser.uid])
 
   useEffect(() => {
-    let gg = db.collection("posts").where("userId", "==", authUser.uid)
+    let unsubscribed = db.collection("posts").where("userId", "==", authUser.uid)
       .get()
       .then((res) => {
         setPosts(res.docs.map((post) => {
@@ -51,9 +55,9 @@ function Profile() {
           })
         }))
       return () => {
-        gg()
+        unsubscribed()
       }
-    }, []);
+    }, [authUser.uid]);
   })
  
   const lists = posts.length > 0? (
@@ -126,7 +130,6 @@ function Profile() {
       <Navbar />
       <div className="profile">
         { Edit }
-      {/* <EditProfile closeEdit={closeEdit} showEdit={showEdit} user={user.length? user[0].profile: defaultImg} /> */}
         <div className="profile__header">
           <div className="profile__image">
             <div className="profile__circle" style={img}>

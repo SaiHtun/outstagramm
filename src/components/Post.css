@@ -9,6 +9,7 @@
 .post__header {
   background-color: #ffff;
   width: 100%;
+  min-height: 50px;
   padding: 10px 15px;
   display: flex;
   align-items: center;
@@ -22,7 +23,7 @@
   border-radius: 50%;
   background-color: salmon;
   margin-right: 10px;
-  line-height: 40px;
+  line-height: 50px;
   text-align: center;
 }
 
@@ -63,6 +64,7 @@
 .avater__name {
   display: flex;
   align-items: center;
+  height: 40px;
 }
 
 /* Post drop panel */

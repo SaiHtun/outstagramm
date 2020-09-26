@@ -1,27 +1,20 @@
 import firebase from 'firebase';
 
-// var firebaseConfig = {
-//   apiKey: "AIzaSyDKqWBF19ApfM8LaNkJEvLecGkK6r0I4NY",
-//   authDomain: "outstagramm.firebaseapp.com",
-//   databaseURL: "https://outstagramm.firebaseio.com",
-//   projectId: "outstagramm",
-//   storageBucket: "outstagramm.appspot.com",
-//   messagingSenderId: "702086389426",
-//   appId: "1:702086389426:web:e7370f48851bc53798b3ab",
-//   measurementId: "G-5DHQD7C4LV"
-// };
+
 var firebaseConfig = {
-  apiKey: "AIzaSyCLum0T6Ng8aE-VZ2MGMfhwQifd90JoCV8",
-  authDomain: "instagram-clone-7b11f.firebaseapp.com",
-  databaseURL: "https://instagram-clone-7b11f.firebaseio.com",
-  projectId: "instagram-clone-7b11f",
-  storageBucket: "instagram-clone-7b11f.appspot.com",
-  messagingSenderId: "21432529587",
-  appId: "1:21432529587:web:f471a726b0bec75ab436c6",
-  measurementId: "G-SPM5MGH9MY"
+  apiKey: "AIzaSyAcHm-sxzfGHxdyVLLUVEU3GUiKc_6_hDo",
+  authDomain: "outstagramm-2bbb5.firebaseapp.com",
+  databaseURL: "https://outstagramm-2bbb5.firebaseio.com",
+  projectId: "outstagramm-2bbb5",
+  storageBucket: "outstagramm-2bbb5.appspot.com",
+  messagingSenderId: "1570837939",
+  appId: "1:1570837939:web:b68b5e5a565121569c67c6",
+  measurementId: "G-8CGY2FKWZ1"
 };
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
 const db = firebase.firestore();
 const auth = firebase.auth();
@@ -30,3 +23,4 @@ const storage = firebase.storage();
 export {
   db, auth, storage
 };
+

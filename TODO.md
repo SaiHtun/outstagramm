@@ -1,8 +1,13 @@
 ** Timeline
 
-*[] fix displaying posts and users
+*[x] fix displaying posts and users
 
 ** Error Handling
 
-*[] signin/up
-*[] posting
+*[x] signin/up
+*[x] posting
+
+** Profile
+
+*[x] profile avater
+*[x] aligning edit profile panel
