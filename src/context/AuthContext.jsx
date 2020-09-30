@@ -27,7 +27,10 @@ function AuthContextProvider(props) {
   }
 
   const closeProfile = (e) => {
-    if(e.target.className !== "userCircle" && e.target.className !== "dots" && e.target.className !== "comment" && e.target.className !== "commentInfo") {
+    if(e.target.className !== "userCircle" && e.target.className !== "dots" 
+    && e.target.className !== "comment" 
+    && e.target.className !== "commentInfo"
+    && e.target.className !== "editProfile") {
       setDropProfilePanel(false);
       setClosePanel(true);
     }

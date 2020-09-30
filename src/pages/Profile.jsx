@@ -8,7 +8,7 @@ import { FaRegCommentDots, FaRegHeart, FaUserEdit  } from 'react-icons/fa';
 import EditProfile from '../components/EditProfile';
 
 function Profile() {
-  const { closeProfile, authUser } = useContext(AuthContext);
+  const { closeProfile, authUser, dropProfilePanel } = useContext(AuthContext);
   const [ posts, setPosts ] = useState([]);
   const [ openDetail, setOpenDetail ] = useState(false);
   const [ post, setPost ] = useState({});
@@ -27,6 +27,7 @@ function Profile() {
     setLikes(likes);
     setPost(posts.find((post) => post.id === postId ))
   }
+
 
   useEffect(() => {
     let unsubscribed = db.collection("users").where("id", "==", authUser.uid)
@@ -124,9 +125,17 @@ function Profile() {
     user[0].profile.username
   ) : ( authUser.displayName);
 
+
+  const closed = (e) => {
+    closeProfile(e);
+    if(e.target.className !== "editProfile" && showEdit) {
+      setShowEdit(false);
+    };
+  }
+
   return (
     <>
-    <div onClick={(e) => { closeProfile(e) }}>
+    <div onClick={closed}>
       <Navbar />
       <div className="profile">
         { Edit }

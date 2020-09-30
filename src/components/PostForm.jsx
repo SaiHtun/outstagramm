@@ -61,7 +61,7 @@ function PostForm() {
           { progress > 0 && <progress className="progress" value={progress} max="100" />}
         <div className="image_btn">
           <input type="file" id="file"  onChange={handleImage}/>
-          <label htmlFor="file"><FaImages className="faImages" /></label>
+          <label htmlFor="file"><FaImages className={`faImages ${image? "readyImg": null}`} /></label>
           <button className="postBtn" onClick={handleUpload} disabled={!caption || !image}>Post</button>
         </div>
       </form>

@@ -26,6 +26,10 @@
   font-size: 2em;
   cursor: pointer;
 }
+/* img ready */
+.readyImg {
+  color: teal;
+}
 
 .postBtn {
   padding: 5px 10px;

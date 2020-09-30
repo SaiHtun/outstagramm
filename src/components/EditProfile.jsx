@@ -12,7 +12,7 @@ function EditProfile(props) {
   const [username, setUsername] = useState('')
   const [bio, setBio] = useState('')
   const [delay, setDelay] = useState(false)
-  const { closeEdit, user } = props
+  const { closeEdit, user, showEdit } = props
 
   const handleProfileImage = (e) => {
     if (e.target.files[0]) {
@@ -190,7 +190,7 @@ function EditProfile(props) {
 
   return (
     <div
-      className={`editProfile container ${delay ? 'showEditProfile' : null}`}
+      className={`editProfile container ${showEdit && delay? 'showEditProfile' : null}`}
     >
       <div className='profile__header'>
         <div className='profile__image'>

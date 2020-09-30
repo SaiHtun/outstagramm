@@ -32,7 +32,8 @@ function PostHover({post, handleOpenDetail}) {
     <>
       <div className="photo" style={bgImg} 
       onMouseEnter={() => { setHover(true)}}
-      onMouseLeave={() => { setHover(false)}}>
+      onMouseLeave={() => { setHover(false)}}
+      onClick={() => { setHover(true)}}>
         <div className={`photo__overlay ${hover? "show__overlay": "up"}`}
         onClick={() => handleOpenDetail(post.id, comments, likes)}>
           <div className="heart">
