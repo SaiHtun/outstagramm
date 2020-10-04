@@ -1,7 +1,7 @@
 import Navbar from '../components/Navbar';
 import PostsPanel from '../components/PostsPanel';
 import { AuthContext } from '../context/AuthContext';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import React, { useContext } from 'react'
 import PostForm from '../components/PostForm';
 import { Route } from 'react-router-dom';
@@ -13,8 +13,12 @@ function Timeline( ) {
   const { authUser, closeProfile, users } = useContext(AuthContext);
   const { posts } = useContext(PostContext);
 
-  const usersList = users.length? (
-    users.map((user, index) => {
+  const actualUsers = users && users.filter((user) => {
+    return user.id !== authUser?.uid
+  })
+ 
+  const usersList = actualUsers.length? (
+    actualUsers.map((user, index) => {
       const bgImg = {
         backgroundImage: `url(${user.imageURL})`,
         backgroundPosition: 'center',
@@ -28,7 +32,7 @@ function Timeline( ) {
             <div className="post__avater" style={user.imageURL? bgImg: null}>
               { user.imageURL? null:user.username[0].toUpperCase()}
             </div>
-            <p key={index}>{ user.username }</p>
+            <p key={index} style={{cursor: "pointer"}} ><Link to={`profile/${user.username}`}>{ user.username }</Link></p>
           </div>
       )
     })

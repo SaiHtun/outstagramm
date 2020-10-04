@@ -4,7 +4,7 @@ import { db, storage } from '../firebase';
 import { AuthContext } from '../context/AuthContext';
 
 function Edit(props) {
-  const { authUser } = useContext(AuthContext)
+  const { authUser, user } = useContext(AuthContext)
   const [ caption, setCaption ] = useState("");
   const [ image, setImage ] = useState(null);
   const [ path, setPath ] = useState(null);
@@ -14,16 +14,19 @@ function Edit(props) {
   const [ overlay, setOverlay ] = useState(false);
 
   useEffect(() => {
-      const unsubscribed = db.collection("posts").doc(props.match.params.id).onSnapshot((snapshot) => {
-      setPost({
-        id: snapshot.id,
-        post: snapshot.data()
-      })
+    const unsubscribed = db.collection("posts").doc(props.match.params.id).onSnapshot((snapshot) => {
+    let data = snapshot.data();
+    setPost({
+      id: snapshot.id,
+      post: data
+    })
+    setCaption(data.caption);
     })
     return () => {
       unsubscribed()
     };
-  }, [props, post]);
+  }, [props]);
+
 
   const handleImage =(e) => {
     if(e.target.files[0]) {
@@ -48,9 +51,6 @@ function Edit(props) {
   }
 
   const update = async () => {
-    // console.log("caption", caption);
-    // console.log("image", image);
-    // return;
     if(caption && image) {
       try {
         await storage.ref(`images/${authUser.uid}/posts`).child(post.post.imageName).delete();
@@ -62,6 +62,8 @@ function Edit(props) {
           imageURL: url,
           imageName: image.name
         })
+        setCaption("");
+        setImage(null);
         props.history.push('/timeline');
         return;
       } catch (error) {
@@ -72,6 +74,7 @@ function Edit(props) {
         ...post.post,
         caption
       })
+      setCaption("");
       props.history.push('/timeline');
       return;
     } else if(image) {
@@ -83,6 +86,7 @@ function Edit(props) {
         imageURL: url,
         imageName: image.name
       })
+      setImage(null);
       props.history.push('/timeline');
       return;
     }
@@ -104,13 +108,33 @@ function Edit(props) {
     height: "180px",
   }
 
+  const profileImg = {
+    backgroundImage: `url(${user.user?.imageURL})`,
+    backgroundPosition: 'center',
+    backgroundSize: "cover",
+    width: "40px",
+    height: "40px",
+    borderRadius: "50%",
+    objectFit: "contains"
+  }
+
+  const handleChange = (e) => {
+    setCaption(e.target.value)
+  }
+
   return (
     <div className="edit" onClick={(e) => { BackToTimeline(e) }}>
       <div className="edit__panel">
         <div className="edit__nav">Edit Post</div>
         <div className="edit__info">
-          <div className="edit__avater">{ post.post?.username[0].toUpperCase()}</div>
-          <input type="text" placeholder={post.post?.caption} onChange={(e)=> { setCaption(e.target.value)}} value={caption}/>
+          <div className="edit__circle">
+            { user.user?.imageURL? (
+              <div style={profileImg}></div>
+            ): (
+              <div className="edit__avater">{ post.post?.username[0].toUpperCase()}</div>
+            )}
+          </div>
+          <input type="text" placeholder={post.post?.caption} value={caption} onChange={handleChange} autoFocus/>
         </div>
         <div className="edit__image">
           <div className="edit__image__label">

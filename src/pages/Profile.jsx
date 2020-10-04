@@ -7,15 +7,15 @@ import ProfilePost from '../components/ProfilePost';
 import { FaRegCommentDots, FaRegHeart, FaUserEdit  } from 'react-icons/fa';
 import EditProfile from '../components/EditProfile';
 
-function Profile() {
-  const { closeProfile, authUser, dropProfilePanel } = useContext(AuthContext);
+function Profile(props) {
+  const { closeProfile, authUser, user } = useContext(AuthContext);
   const [ posts, setPosts ] = useState([]);
   const [ openDetail, setOpenDetail ] = useState(false);
   const [ post, setPost ] = useState({});
   const [ comments, setComments ] = useState([]);
   const [ likes, setLikes ] = useState([]);
   const [ showEdit, setShowEdit ] = useState(false);
-  const [ user, setUser ] = useState([]);
+  const [ reUser, setReUser ] = useState([]);
 
   const closeEdit = () => {
     setShowEdit(false);
@@ -30,36 +30,68 @@ function Profile() {
 
 
   useEffect(() => {
-    let unsubscribed = db.collection("users").where("id", "==", authUser.uid)
-      .onSnapshot((snapshot) => {
-        setUser(snapshot.docs.map((user) => {
-          return {
-            id: user.id,
-            profile: user.data()
-          }
-        }))
-      })  
-      
-    return () => {
-      unsubscribed()
-    }
-  }, [authUser.uid])
+    if(user.user?.username !== props.match.params.username ) {
+      if( props.match.params.username !== user.user?.username ) {
+        let unsubscribed = db.collection("users").where("username", "==", props.match.params.username)
+          .onSnapshot((snapshot) => {
+            let data = snapshot.docs[0].data();
+            setReUser({
+              id: snapshot.docs[0].id,
+              user: data
+            })
+          })  
+          
+        return () => {
+          unsubscribed()
+        }
+      }    
+    } else {
+        let unsubscribed = db.collection("users").where("id", "==", user.user?.id)
+          .onSnapshot((snapshot) => {
+            let data = snapshot.docs[0].data();
+            setReUser({
+              id: snapshot.docs[0].id,
+              user: data
+            })
+          })  
+          
+        return () => {
+          unsubscribed()
+        }
+      }    
+  }, [props])
 
   useEffect(() => {
-    let unsubscribed = db.collection("posts").where("userId", "==", authUser.uid)
-      .get()
-      .then((res) => {
-        setPosts(res.docs.map((post) => {
-          return ({
-            id: post.id,
-            post: post.data()
-          })
-        }))
-      return () => {
-        unsubscribed()
-      }
-    }, [authUser.uid]);
-  })
+    if(user.user?.username !== props.match.params.username) {
+      let unsubscribed = db.collection("posts").where("username", "==", props.match.params.username)
+        .get()
+        .then((res) => {
+          setPosts(res.docs.map((post) => {
+            return ({
+              id: post.id,
+              post: post.data()
+            })
+          }))
+        return () => {
+          unsubscribed()   
+        }
+      });
+    } else {
+      let unsubscribed = db.collection("posts").where("userId", "==", user.user?.id)
+        .get()
+        .then((res) => {
+          setPosts(res.docs.map((post) => {
+            return ({
+              id: post.id,
+              post: post.data()
+            })
+          }))
+        return () => {
+          unsubscribed()   
+        }
+      });
+    }
+  }, [props, user])
  
   const lists = posts.length > 0? (
     posts.map((post, index) => {
@@ -75,13 +107,12 @@ function Profile() {
     comments.map((comment, index) => {
      return (
        <div className="postComments" key={index}>
-        <div className="post__avater">{ comment.username[0].toUpperCase()}</div>
-        <p><strong style={{marginRight: "3px"}}>{ comment.username }</strong>{comment.comment}</p>
+        <p><strong style={{margin: "5px"}}>{ comment.username }</strong>{comment.comment}</p>
        </div>
      )
     })
   ) : (
-    <span>No Comments</span>
+    <span style={{ marginLeft: "5px"}}>No Comments</span>
   );
 
   const postLikes = likes.length? (
@@ -110,50 +141,84 @@ function Profile() {
   }
 
   const img = {
-    backgroundImage: `url(${user.length? user[0].profile.imageURL: "https://gamespot1.cbsistatic.com/uploads/scale_landscape/1595/15950357/3653677-dragon%20ball%20z%20kakarot.jpeg"})`,
+    backgroundImage: `url(${reUser.user? reUser.user?.imageURL: "https://gamespot1.cbsistatic.com/uploads/scale_landscape/1595/15950357/3653677-dragon%20ball%20z%20kakarot.jpeg"})`,
     backgroundPosition: "center",
     backgroundSize: "cover"
   }
 
   const defaultImg = "https://gamespot1.cbsistatic.com/uploads/scale_landscape/1595/15950357/3653677-dragon%20ball%20z%20kakarot.jpeg";
 
+  const changeParam = (username) => {
+    props.history.push({
+      pathname: `/profile/${username}`
+    })
+  }
+
   const Edit = showEdit? (
-    <EditProfile closeEdit={closeEdit} showEdit={showEdit} user={user.length? user[0]: defaultImg} />
+    <EditProfile closeEdit={closeEdit} showEdit={showEdit} user={reUser.user? reUser: defaultImg} change={changeParam}/>
   ) : null;
 
-  const name = user.length? (
-    user[0].profile.username
+  const name = reUser.user? (
+    reUser.user.username
   ) : ( authUser.displayName);
 
 
-  const closed = (e) => {
-    closeProfile(e);
-    if(e.target.className !== "editProfile" && showEdit) {
-      setShowEdit(false);
-    };
+  // const handleClose = (e) => {
+  //   setShowEdit(false);
+  // }
+
+  const profileImg = {
+    backgroundImage: `url(${reUser.user && reUser.user?.imageURL? reUser.user.imageURL: null})`,
+    backgroundPosition: 'center',
+    backgroundSize: "cover",
+    width: "40px",
+    height: "40px",
+    borderRadius: "50%",
+    objectFit: "contains"
   }
+
+  const handleClose = (e) => {
+    closeProfile(e);
+    if(!showEdit) return;
+    if(e.target.className !== "editProfile"
+      && e.target.className !== "profile__header"
+      && e.target.className !== "profile__image"
+      && e.target.className !== "profile__info"
+      && e.target.className !== "profileLabel"
+      && e.target.className !== "profile__circle"
+      && e.target.type !== "text"
+      && e.target.type !== "file") {
+        setShowEdit(false);
+      }
+  }
+
+  
 
   return (
     <>
-    <div onClick={closed}>
+    <div onClick={handleClose} >
       <Navbar />
       <div className="profile">
         { Edit }
-        <div className="profile__header">
+        <div className="profile__header" >
           <div className="profile__image">
             <div className="profile__circle" style={img}>
             </div>
           </div>
           <div className="profile__info">
             <h3>{name}</h3>
-            <p>{user.length? user[0].profile.bio : null}</p>
+            <p>{reUser.user? reUser.user.bio : null}</p>
           </div>
-          <div className="editProfile__icon">
-            <FaUserEdit style={{fontSize: "1.5em", cursor: "pointer"}}
-            onClick={() => { setShowEdit(!showEdit)}}/>
-          </div>
+          { reUser.user && reUser.user.id === authUser.uid? (
+            <div className="editProfile__icon">
+              <FaUserEdit style={{fontSize: "1.5em", cursor: "pointer"}}
+              onClick={() => { setShowEdit(!showEdit)}}/>
+            </div>
+          ): (
+            <div style={{ marginRight: "150px"}}></div>
+          )}
         </div>
-        <div className="profile__photo__grid">
+        <div className="profile__photo__grid" >
         { lists }
         </div>
       </div>
@@ -173,10 +238,14 @@ function Profile() {
           {/* post detail header */}
           <div className="post__detail__header">
             <div className="post__detail__avater">
-              <div className="post__avater">{ post.post?.username[0].toUpperCase()}</div>
-              <p style={{fontWeight: "bold"}}>{ post.post?.username}</p>
+              { reUser.user && reUser.user?.imageURL? (
+                <div style={profileImg}></div>
+              ): (
+                <div className="post__avater">{ post.post?.username[0].toUpperCase()}</div>
+              )}
+              <p style={{fontWeight: "bold", marginLeft: "10px"}}>{ post.post?.username}</p>
             </div>
-            <p style={{marginLeft: "5px", overflow: "hidden"}}>{ post.post?.caption }</p>
+            <p style={{margin: "5px", overflow: "hidden"}}>{ post.post?.caption }</p>
           </div>
           {/* post detail comments */}
           <div className="post__detail__comments">

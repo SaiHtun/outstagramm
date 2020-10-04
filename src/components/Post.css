@@ -9,7 +9,7 @@
 .post__header {
   background-color: #ffff;
   width: 100%;
-  min-height: 50px;
+  min-height: 40px;
   padding: 10px 15px;
   display: flex;
   align-items: center;
@@ -25,6 +25,11 @@
   margin-right: 10px;
   line-height: 50px;
   text-align: center;
+  cursor: pointer;
+}
+
+.displayName  {
+  cursor: pointer;
 }
 
 .post__image {
@@ -149,4 +154,10 @@ a {
   margin-right: 5px;
   color: red;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  .post__header {
+    min-height: 50px;
+  }
 }

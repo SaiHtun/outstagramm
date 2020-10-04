@@ -43,14 +43,13 @@ function Post( { post } ) {
   }, [closePanel])
   //  liked listener 
   useEffect(() => {
-     db.collection("posts").doc(post.id).collection("likes").get().then((likes) => {
+    db.collection("posts").doc(post.id).collection("likes").get().then((likes) => {
         setLikesCount(likes.docs.length);
-        let liked = likes.docs.find((like) => like.data().userId === authUser.uid);
+        let liked = likes.docs.find((like) => like.data().userId === user.id);
         if(liked) setLiked(true);
       })
-
-   
-  }, [liked, post.id, authUser])
+    
+  }, [liked, post.id, user.id])
 
   //  get avater
   useEffect(() => {
@@ -106,12 +105,12 @@ function Post( { post } ) {
       .get()
       .then((likes) => {
         const liked = likes.docs.find((like) => {
-          return like.data().userId === authUser.uid
+          return like.data().userId === user?.id
         })
         if(!liked) {
           db.collection("posts").doc(post.id).collection("likes").add({
-            userId: authUser.uid,
-            username: authUser.displayName
+            userId: user.id,
+            username: user.user?.username
           }).then(() => {
             setLiked(true);
           })
@@ -184,8 +183,8 @@ function Post( { post } ) {
       <div className="post">
         <div className="post__header">
           <div className="avater__name">
-            <div className="post__avater" style={avater? img: null}>{ avater?.imageURL? null:post.post.username[0].toUpperCase()}</div>
-            <p className="displayName">{ post.post.username } </p>
+            <div className="post__avater" style={avater? img: null}><Link to={`profile/${post.post.username}`}>{ avater?.imageURL? null:post.post.username[0].toUpperCase()}</Link></div>
+            <p className="displayName"><Link to={`profile/${post.post.username}`}>{ post.post.username }</Link></p>
           </div>
           <div className="dots">
             { dots }

@@ -1,6 +1,6 @@
 .profile {
   width: 60vw;
-  min-height: 100vh;
+  min-height: 80vh;
   margin-left: auto;
   margin-right: auto;
   margin-top: 60px;
@@ -14,6 +14,7 @@
   align-items: center;
   border-bottom: 1px solid rgb(196, 196, 196);
   margin-bottom: 30px;
+  z-index: -1;
 }
 
 .profile__image {
@@ -55,7 +56,7 @@
   grid-template-columns: repeat(auto-fit, 293px);
   gap: 20px;
   margin-bottom: 150px;
-  
+  z-index: 1;
 }
 .profile__footer {
   text-align: center;
@@ -138,13 +139,15 @@
 .post__detail__info {
   width: 450px;
   height: 100%;
+  overflow-y: auto;
   padding: 10px 15px;
   background-color: #ffff;
 }
 
 .post__detail__header {
   width: 100%;
-  height: 60px;
+  height: 70px;
+  overflow-y: auto;
   margin: 10px 0px;
   border-bottom: 1px solid rgb(206, 206, 206);
 }
@@ -187,7 +190,7 @@
 .post__detail__likes {
   width: 100%;
   height: 140px;
-  /* background-color: #f3f3f3; */
+  margin-left: 5px;
 }
 .post__heart__icon, .post__comment__icon {
   font-size: 1.5em;
@@ -232,7 +235,6 @@
   .post__detail__comments {
     min-height: 0px;
   }
-  
 }
 
 

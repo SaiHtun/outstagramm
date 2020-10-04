@@ -3,21 +3,23 @@ import { db } from '../firebase';
 import "./ProfilePost.css";
 import { FaRegCommentDots, FaRegHeart  } from 'react-icons/fa';
 
-function PostHover({post, handleOpenDetail}) {
+function ProfilePost({post, handleOpenDetail}) {
   const [ comments, setComments ] = useState([]);
   const [ likes, setLikes ] = useState([]);
   const [ hover, setHover ] = useState(false);
 
   useEffect(() => {
-    db.collection("posts").doc(post.id).collection("comments").get()
-      .then((comments) => {
-        setComments(comments.docs.map((comment) => comment.data()))
-      })
-    db.collection("posts").doc(post.id).collection("likes").get()
-      .then((likes) => {
-        setLikes(likes.docs.map((like) => like.data()))
-      })
-     
+    db.collection("posts").doc(post.id).collection("comments").orderBy("timestamp").onSnapshot((comments) => {
+      setComments(comments.docs.map((comment) => {
+        return comment.data();
+      }))
+    });
+
+    db.collection("posts").doc(post.id).collection("likes").onSnapshot((likes) => {
+      setLikes(likes.docs.map((like) => {
+        return like.data();
+      }))
+    })
   }, [post.id])
 
   const bgImg = {
@@ -50,4 +52,4 @@ function PostHover({post, handleOpenDetail}) {
    )
 }
 
-export default PostHover
+export default ProfilePost

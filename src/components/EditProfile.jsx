@@ -12,7 +12,7 @@ function EditProfile(props) {
   const [username, setUsername] = useState('')
   const [bio, setBio] = useState('')
   const [delay, setDelay] = useState(false)
-  const { closeEdit, user, showEdit } = props
+  const { closeEdit, user, showEdit, change } = props
 
   const handleProfileImage = (e) => {
     if (e.target.files[0]) {
@@ -22,22 +22,24 @@ function EditProfile(props) {
   }
 
   useEffect(() => {
-    setUsername(user.profile?.username)
-    setBio(user.profile?.bio)
+    setUsername(user.user?.username)
+    setBio(user.user?.bio)
     setTimeout(() => {
       setDelay(true)
     }, 100)
-  }, [user.profile])
+  }, [user])
+
+  
 
   const img = {
     backgroundImage: `url(${
-      path ? path : user.profile.imageURL ? user.profile.imageURL : user
+      path ? path : user.user.imageURL? user.user.imageURL : user
     })`,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
   }
   // user old name
-  let oldName = user.profile?.username
+  let oldName = user.user?.username
   // update profile
   const handleSave = async () => {
     if (!username && !bio && !profileImg) return
@@ -86,13 +88,30 @@ function EditProfile(props) {
               .update({ username: username })
           }
         })
+
+        //  update liked name
+        let likes = await db.collection("posts").doc(id).collection("likes").get();
+        likes.forEach(async(like) => {
+         let data = like.data();
+         if(data.username === oldName) {
+           await db.collection("posts").doc(id).collection("likes").doc(like.id).update({ username: username })
+         }
+        })
       })
+       await change(username);
+
+
+      setBio("");
+      setDelay("");
+      setUsername("");
+      setProfileImg("");
+
     } else if (username && bio) {
       await db.collection('users').doc(user.id).update({
         username,
         bio,
       })
-
+      
       //  update Post Owner name
       posts.forEach(async ({ id, post }) => {
         if (post.username === oldName) {
@@ -119,9 +138,22 @@ function EditProfile(props) {
               .update({ username: username })
           }
         })
+
+         //  update liked name
+         let likes = await db.collection("posts").doc(id).collection("likes").get();
+         likes.forEach(async(like) => {
+          let data = like.data();
+          if(data.username === oldName) {
+            await db.collection("posts").doc(id).collection("likes").doc(like.id).update({ username: username })
+          }
+         })
       })
+      await change(username);
+
+      setBio("");
+      setUsername("");
+
     } else if (username && profileImg){
-      console.log(profileImg.name)
       await storage
         .ref(`images/${authUser.uid}/profile`)
         .child(profileImg.name)
@@ -133,10 +165,18 @@ function EditProfile(props) {
       await db.collection('users').doc(user.id).update({
         imageURL: url,
       })
+
+      await change(username)      
+      setUsername("");
+      setProfileImg("");
+
     } else if (bio) {
       await db.collection('users').doc(user.id).update({
         bio,
       })
+      await change(username)   
+      setBio("");
+
     } else if (username) {
       await db.collection('users').doc(user.id).update({
         username,
@@ -167,7 +207,17 @@ function EditProfile(props) {
               .update({ username: username })
           }
         })
+
+        //  update liked name
+        let likes = await db.collection("posts").doc(id).collection("likes").get();
+        likes.forEach(async(like) => {
+        let data = like.data();
+        if(data.username === oldName) {
+          await db.collection("posts").doc(id).collection("likes").doc(like.id).update({ username: username })
+        }
+        })
       })
+      await change(username);
     }
     setUsername('')
     setBio('')

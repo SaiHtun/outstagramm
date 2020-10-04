@@ -6,6 +6,7 @@ input[type="file"] {
   width: 60vw;
   background-color: white;
   transform: translateY(-500px);
+  /* pointer-events: none; */
   /* opacity: 0; */
   transition: all 0.5s ease-in-out;
 }
