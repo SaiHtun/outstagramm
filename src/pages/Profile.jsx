@@ -59,7 +59,7 @@ function Profile(props) {
           unsubscribed()
         }
       }    
-  }, [props])
+  }, [user.user, props])
 
   useEffect(() => {
     if(user.user?.username !== props.match.params.username) {

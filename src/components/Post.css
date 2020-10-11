@@ -4,6 +4,7 @@
   margin: 20px;
   border: 1px solid #DBDBDB;
   position: relative;
+  background-color: #fff;
 }
 
 .post__header {
@@ -49,21 +50,24 @@
 }
 
 
-.commentForm {
+.commentForm, .addCommentForm {
   display: flex;
   align-items: center;
+  margin-top: 10px;
 }
 
 .commentForm input {
   flex: 4;
-  padding: 8px 10px;
+  padding: 5px 10px;
   border: none;
+  font-size: 15px;
 }
 .commentForm button {
   flex: 1;
-  padding: 8px 10px;
+  padding: 5px 10px;
   border: none;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .avater__name {

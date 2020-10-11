@@ -8,6 +8,7 @@ import { Route } from 'react-router-dom';
 import EditPost from '../components/EditPost';
 import "./Timeline.css";
 import { PostContext } from '../context/PostContext';
+import { ReactComponent as LoadingIcon } from '../assets/Spin-1s-200px.svg';
 
 function Timeline( ) {
   const { authUser, closeProfile, users } = useContext(AuthContext);
@@ -62,7 +63,9 @@ function Timeline( ) {
             </div>
           </>
         ): (
-          <div className="noPost"><iframe title="loading" src="https://giphy.com/embed/KG4PMQ0jyimywxNt8i" width="100px" height="100px" style={{ position:"absolute"}}frameBorder="0" className="giphy-embed" allowFullScreen></iframe></div>
+          <div style={{ width: "100%", height: "100%", backgroundColor: "#fafafa", textAlign: "center"}}>
+            <LoadingIcon style={{ width: "100px", height: "100px", marginTop: "100px"}}></LoadingIcon>
+          </div>
         )}
       </div>
     </section>

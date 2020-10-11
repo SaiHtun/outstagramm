@@ -9,17 +9,24 @@ function ProfilePost({post, handleOpenDetail}) {
   const [ hover, setHover ] = useState(false);
 
   useEffect(() => {
-    db.collection("posts").doc(post.id).collection("comments").orderBy("timestamp").onSnapshot((comments) => {
+    let asyncComments = db.collection("posts").doc(post.id).collection("comments").orderBy("timestamp").onSnapshot((comments) => {
       setComments(comments.docs.map((comment) => {
         return comment.data();
       }))
     });
 
-    db.collection("posts").doc(post.id).collection("likes").onSnapshot((likes) => {
+
+
+    let asyncLikes = db.collection("posts").doc(post.id).collection("likes").onSnapshot((likes) => {
       setLikes(likes.docs.map((like) => {
         return like.data();
       }))
     })
+
+    return () => {
+      asyncComments();
+      asyncLikes();
+    }
   }, [post.id])
 
   const bgImg = {

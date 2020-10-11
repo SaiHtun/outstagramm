@@ -37,19 +37,26 @@ function Post( { post } ) {
     if(closePanel) {
       setDropPanel(false);
     }
-    // return () => {
-    //   setDropPanel(true);
-    // };
+   
   }, [closePanel])
   //  liked listener 
   useEffect(() => {
-    db.collection("posts").doc(post.id).collection("likes").get().then((likes) => {
-        setLikesCount(likes.docs.length);
-        let liked = likes.docs.find((like) => like.data().userId === user.id);
+
+    db.collection("posts").doc(post.id).collection("likes").onSnapshot((snapshot) => {
+      setLikesCount(snapshot.docs.length);
+      let liked = snapshot.docs.find((like) => like.data().userId === user.id);
         if(liked) setLiked(true);
-      })
+    })
+
+
+    // db.collection("posts").doc(post.id).collection("likes").get().then((likes) => {
+
+    //     setLikesCount(likes.docs.length);
+    //     let liked = likes.docs.find((like) => like.data().userId === user.id);
+    //     if(liked) setLiked(true);
+    //   })
     
-  }, [liked, post.id, user.id])
+  }, [ post.id, user.id])
 
   //  get avater
   useEffect(() => {

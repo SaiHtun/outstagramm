@@ -223,7 +223,7 @@ function EditProfile(props) {
     setBio('')
     setProfileImg(null)
     setPath('')
-    setDelay(false)
+    setDelay(false) 
     closeEdit()
   }
 

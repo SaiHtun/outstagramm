@@ -40,7 +40,7 @@ function Navbar() {
           <h3 className="navbar__name" style={{color: "skyblue"}}>{ name }</h3>
           <div className="profileAndPanel">
             <div className="userCircle" style={user.user?.imageURL? bgImg: defaultBg} onClick={toggleDropProfilePanel}>
-            {user.user?.imageURL? null: <span style={{ lineHeight: "40px"}}>{ name? name[0].toUpperCase(): null }</span>}
+            {user.user?.imageURL? null: <span style={{ lineHeight: "40px", pointerEvents: "none"}}>{ name? name[0].toUpperCase(): null }</span>}
             </div>
             <DropProfilePanel>
               <ul>

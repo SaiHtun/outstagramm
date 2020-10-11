@@ -1,3 +1,10 @@
+.timeline {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+
 .hero {
   display: flex;
   width: 80vw;

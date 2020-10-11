@@ -33,7 +33,7 @@ const Comment = (props) => {
   }, [ togglePostPanel, dropCommentPanel ])
 
   const handleDelete = () => {
-    db.collection("posts").doc(postId).collection("comments").doc(commentId).delete().then(() => console.log("deleted successfully.."))
+    db.collection("posts").doc(postId).collection("comments").doc(commentId).delete();
   }
 
   const handleEdit = () => {
@@ -43,7 +43,6 @@ const Comment = (props) => {
 
   const editSave = (e) => {
     e.preventDefault();
-    console.log(newComment)
     if(newComment) {
       db.collection("posts").doc(postId).collection("comments").doc(commentId).set({
         ...comment,
@@ -55,7 +54,7 @@ const Comment = (props) => {
 
   const commentDots = owner === "postOwner" || owner === "commentOwner"? (
     <div className="commentDots">
-      <FaEllipsisH className="comment__dots"/>
+      <FaEllipsisH className={`comment__dots ${ dropCommentPanel? "show__dots": null}`}/>
       <DropPostPanel className={`comment__dropPanel ${dropCommentPanel && !editComment? "showCommentPanel": null}`} >
         <li onClick={ handleEdit }>Edit</li>
         <li onClick={ handleDelete }>Delete</li>
@@ -73,12 +72,19 @@ const Comment = (props) => {
     <div className={`comment ${owner === "postOwner" || owner === "commentOwner"? "pointer": null}`}  >
         { editComment? (
           <>
-            <form className="commentForm" onSubmit={ editSave }><strong>{ comment.username }</strong><input className="commentInput" 
-            type="text" value={newComment} onChange={(e) => { setNewComment(e.target.value)}} autoFocus/>
-            <div className="btn">
-              <span style={{ color: "red", zIndex: "1"}} onClick={ handleCancel }>Cancel</span>
-              <button style={{ padding: "5px 8px", fontWeight: "bold", fontSize: "1em", marginLeft: "5px"}}>Save</button>
-            </div>
+            <form className="addCommentForm" onSubmit={ editSave }>
+              <strong>{ comment.username }</strong>
+              <input className="commentInput" 
+              type="text" value={newComment} onChange={(e) => { setNewComment(e.target.value)}} autoFocus/>
+              <div className="btn">
+                <span style={{ color: "red", zIndex: "1"}} onClick={ handleCancel }>Cancel</span>
+                <button style={{ padding: "5px 8px",
+                 fontWeight: "bold",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "teal",
+                  backgroundColor: "white"}}>Save</button>
+              </div>
             </form>
           </>
         ):(

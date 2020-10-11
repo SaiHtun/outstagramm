@@ -27,6 +27,11 @@
   align-items: center;
   margin-top: 15px;
 }
+
+.edit__info input {
+  font-size: 15px;
+}
+
 .edit__circle {
   flex: 1;
 }
