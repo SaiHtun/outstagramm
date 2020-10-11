@@ -9,6 +9,7 @@ import EditPost from '../components/EditPost';
 import "./Timeline.css";
 import { PostContext } from '../context/PostContext';
 import { ReactComponent as LoadingIcon } from '../assets/Spin-1s-200px.svg';
+import { FaChevronUp } from 'react-icons/fa';
 
 function Timeline( ) {
   const { authUser, closeProfile, users } = useContext(AuthContext);
@@ -17,6 +18,13 @@ function Timeline( ) {
   const actualUsers = users && users.filter((user) => {
     return user.id !== authUser?.uid
   })
+
+  let scrollTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
+  }
  
   const usersList = actualUsers.length? (
     actualUsers.map((user, index) => {
@@ -42,6 +50,20 @@ function Timeline( ) {
   ) : (
     <h3>No users</h3>
   );
+
+  const footer = {
+    // marginTop: "100px",
+    height: "200px",
+    width: "100%",
+    textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
+  }
+
+  
+
 
   if(!authUser) return <Redirect to="/signin"/>;
 
@@ -71,7 +93,12 @@ function Timeline( ) {
         )}
       </div>
       { posts.length && 
-         <footer style={{ marginTop: "200px",height: "200px", textAlign: "center"}}>No more posts</footer>
+         <footer style={footer}>
+            <div style={{ cursor: "pointer", width: "40px", height: "40px", lineHeight: "40px"}} onClick={scrollTop}>
+                <FaChevronUp></FaChevronUp>
+            </div>
+            <span>No More Posts</span>
+         </footer>
       }
     </section>
   )

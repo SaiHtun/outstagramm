@@ -191,7 +191,7 @@ function Post( { post } ) {
         <div className="post__header">
           <div className="avater__name">
             <Link to={`profile/${post.post.username}`}>
-              <div className="post__avater" style={avater? img: null}><Link to={`profile/${post.post.username}`}>{ avater?.imageURL? null:post.post.username[0].toUpperCase()}</Link></div>
+              <div className="post__avater" style={avater? img: null}>{ avater?.imageURL? null:post.post.username[0].toUpperCase()}</div>
             </Link>
             <p className="displayName"><Link to={`profile/${post.post.username}`}>{ post.post.username }</Link></p>
           </div>
@@ -208,8 +208,8 @@ function Post( { post } ) {
           <p className="post__caption"><strong style={{textTransform: "lowercase"}}>{ post.post.username }</strong> { post.post.caption }</p>
           { commentsList }
           <form onSubmit={AddComment} className="commentForm">
-            <input type="text" placeholder="Add comment" value={comment} onChange={(e) => {setComment(e.target.value)}}/>
-            <button type="submit" disabled={!comment}>Add</button>
+            <input type="text" placeholder="Add a comment" value={comment} onChange={(e) => {setComment(e.target.value)}}/>
+            <button type="submit" disabled={!comment}>Post</button>
           </form>
         </div>
       </div>
