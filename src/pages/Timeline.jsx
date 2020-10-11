@@ -30,9 +30,11 @@ function Timeline( ) {
       }
       return (
           <div key={index} className="avater__name" style={{margin: "10px 0px"}}> 
-            <div className="post__avater" style={user.imageURL? bgImg: null}>
-              { user.imageURL? null:user.username[0].toUpperCase()}
-            </div>
+            <Link style={{ width: "50px"}} to={`profile/${user.username}`}>
+              <div className="post__avater" style={user.imageURL? bgImg: null}>
+                  { user.imageURL? null:user.username[0].toUpperCase()}
+              </div>
+            </Link>
             <p key={index} style={{cursor: "pointer"}} ><Link to={`profile/${user.username}`}>{ user.username }</Link></p>
           </div>
       )

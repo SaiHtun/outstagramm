@@ -190,7 +190,9 @@ function Post( { post } ) {
       <div className="post">
         <div className="post__header">
           <div className="avater__name">
-            <div className="post__avater" style={avater? img: null}><Link to={`profile/${post.post.username}`}>{ avater?.imageURL? null:post.post.username[0].toUpperCase()}</Link></div>
+            <Link to={`profile/${post.post.username}`}>
+              <div className="post__avater" style={avater? img: null}><Link to={`profile/${post.post.username}`}>{ avater?.imageURL? null:post.post.username[0].toUpperCase()}</Link></div>
+            </Link>
             <p className="displayName"><Link to={`profile/${post.post.username}`}>{ post.post.username }</Link></p>
           </div>
           <div className="dots">
