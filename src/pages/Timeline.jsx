@@ -64,10 +64,13 @@ function Timeline( ) {
           </>
         ): (
           <div style={{ width: "100%", height: "100%", backgroundColor: "#fafafa", textAlign: "center"}}>
-            <LoadingIcon style={{ width: "100px", height: "100px", marginTop: "100px"}}></LoadingIcon>
+            <LoadingIcon style={{ width: "70px", height: "70px", marginTop: "150px"}}></LoadingIcon>
           </div>
         )}
       </div>
+      { posts.length && 
+         <footer style={{ marginTop: "200px",height: "200px", textAlign: "center"}}>No more posts</footer>
+      }
     </section>
   )
 }

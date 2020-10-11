@@ -77,7 +77,10 @@ const Comment = (props) => {
               <input className="commentInput" 
               type="text" value={newComment} onChange={(e) => { setNewComment(e.target.value)}} autoFocus/>
               <div className="btn">
-                <span style={{ color: "red", zIndex: "1"}} onClick={ handleCancel }>Cancel</span>
+                <span style={{ color: "red",
+                 zIndex: "1",
+                 fontSize: "15px"
+                 }} onClick={ handleCancel }>Cancel</span>
                 <button style={{ padding: "5px 8px",
                  fontWeight: "bold",
                   border: "none",
@@ -88,7 +91,7 @@ const Comment = (props) => {
             </form>
           </>
         ):(
-          <p className="commentInfo" onClick={ handleToggle }><strong style={{textTransform: "lowercase"}}>{ comment.username }</strong> {comment.comment}</p>
+          <p className="commentInfo" onClick={ handleToggle }><strong>{ comment.username }</strong> {comment.comment}</p>
         )}
         { !editComment? commentDots: null }
     </div>
